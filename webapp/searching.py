@@ -16,7 +16,6 @@ def search(query):
     if len(tokens) == 0 or len(tokens) > 3:
         raise ValueError("Запрос должен содержать от 1 до 3 токенов!")
 
-    # Открываем соединение с флагом check_same_thread=False
     with sqlite3.connect(path_to_db, check_same_thread=False) as conn:
         cursor = conn.cursor()
 
