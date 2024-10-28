@@ -1,0 +1,40 @@
+.text-danger {
+    color: #CE0000 !important;
+}
+
+.text-warning {
+    color: #CE0000 !important;
+}
+
+a {
+    color: #442E2A;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #61413B;
+    text-decoration: underline;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.table thead th {
+    border-bottom: 2px solid black;
+}
+
+.btn-custom {
+    background-color: #61413B;
+    color: #E5CFA9;
+}
+
+.btn-custom:hover {
+    background-color: #442E2A;
+    color: #C6B494
+}

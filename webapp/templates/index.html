@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Добро пожаловать на главную страницу корпуса</h1>
+                <p>
+                В этом корпусе собраны размеченные по леммам и частям речи тексты рассказов писателя <b>А. П. Чехова</b>.
+                </p>
+                <p>
+                Чтобы опробовать функционал сайта, воспользуйтесь поисковой строкой.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <form id="form" role="search" action="/search" method="get">
+                    <div class="search-container">
+                        <input type="search" id="query" name="q" placeholder="PRON не VERB" class="search-input" />
+                        <button type="submit" class="btn btn-outline-light search-button">
+                            <i class="bi bi-search search-icon"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="../static/css/index.css">
+{% endblock %}

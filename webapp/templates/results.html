@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Результаты поиска для "{{ query }}"</h1>
+                
+                {% if error %}
+                    <p class="text-danger">{{ error|safe }}</p>
+                
+                {% elif message %}
+                    <p class="text-warning">{{ message }}</p>
+                
+                {% elif results %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Предложение</th>
+                                <th>Название произведения</th>
+                                <th>Источник</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sentence, work_title, source in results %}
+                                <tr>
+                                    <td>{{ sentence }}</td>
+                                    <td>{{ work_title }}</td>
+                                    <td><a href="{{ source }}" target="_blank">{{ source }}</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                <a href="{{ url_for('main_page') }}" class="btn btn-custom mt-3">Вернуться на главную страницу</a>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="../static/css/results.css">
+{% endblock %}

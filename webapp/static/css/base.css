@@ -1,0 +1,22 @@
+body {
+    background: #F5DFBA;
+    font-family: 'Didot', serif;
+  }
+
+.navbar {
+    background-color: #61413B;
+}
+.navbar-brand,
+.nav-link {
+    font-family: 'Didot', serif;
+    color: #E5CFA9 !important;
+}
+
+.nav-link:hover {
+    color: #C09F66 !important;
+}
+
+.navbar-toggler {
+    background-color: #E5CFA9 !important;
+    border: 1px solid #E5CFA9 !important;
+}

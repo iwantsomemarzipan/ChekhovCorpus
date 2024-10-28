@@ -1,0 +1,32 @@
+.container {
+    margin-top: 100px;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center; /* Центрирует элементы по вертикали */
+}
+
+.search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid white;
+    font-size: 16px;
+}
+
+.search-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    color: black;
+    margin-left: 5px;
+}
