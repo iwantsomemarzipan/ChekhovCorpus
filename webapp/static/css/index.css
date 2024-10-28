@@ -5,7 +5,7 @@
 .search-container {
     position: relative;
     display: flex;
-    align-items: center; /* Центрирует элементы по вертикали */
+    align-items: center;
 }
 
 .search-input {
