@@ -23,6 +23,7 @@ def repo_redirect():
                     code=302)
 
 
+# Перенаправляет на страницу с результатами запроса
 @app.route('/search', methods=['GET'])
 def search_results():
     query = request.args.get('q')
@@ -47,7 +48,7 @@ def search_results():
             query=query
             )
     
-    except ValueError as e:  # Обрабатываем ValueError отдельно
+    except ValueError as e:
         return render_template(
             'results.html', results=[],
             query=query, error=str(e)

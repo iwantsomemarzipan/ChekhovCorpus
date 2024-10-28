@@ -20,7 +20,7 @@ def search(query):
     with sqlite3.connect(path_to_db, check_same_thread=False) as conn:
         cursor = conn.cursor()
 
-        # SQL-запрос для поиска последовательности токенов
+        # Тело SQL-запроса для поиска последовательности токенов
         base_query = '''
             SELECT DISTINCT s.original_sentence, s.work_title, s.source
             FROM sentences s
@@ -31,7 +31,9 @@ def search(query):
 
         # Проходим по каждому токену и определяем его тип
         for i, token in enumerate(tokens):
-            alias = f't{i}'  # Создаем алиасы на случай повторных присоединений таблицы
+            # Создаем алиасы для возможности повторно присоединять таблицу
+            # в случае поиска по би- и триграммам
+            alias = f't{i}'
             joins.append(f'JOIN tokens {alias} ON s.id = {alias}.sentence_id')
 
             if token.isupper():
