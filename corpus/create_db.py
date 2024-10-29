@@ -70,10 +70,14 @@ def save_morph(sentence, sentence_id):
             if token.upos == 'PUNCT':
                 continue
 
+            # Приводим леммы к нижнему регистру    
+            lemma = (token.lemma.lower() if token.lemma[0].isupper()
+                     else token.lemma)
+
             cursor.execute('''
                 INSERT INTO tokens (sentence_id, token, lemma, pos)
                 VALUES (?, ?, ?, ?)
-            ''', (sentence_id, token.text, token.lemma, token.upos))
+            ''', (sentence_id, token.text, lemma, token.upos))
 
     conn.commit()
 
