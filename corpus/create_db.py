@@ -48,7 +48,7 @@ def split_into_sentences(text):
     sentences = nltk.sent_tokenize(text, language='russian')
     return sentences
 
-def save_morph(sentence):
+def do_morph(sentence):
     """
     Проводит морфологический анализ
     """
@@ -79,7 +79,7 @@ def insert_data_into_db(txt_file, title, url):
     sentences = split_into_sentences(text)
     
     for sentence in sentences:
-        tokens_data = save_morph(sentence)
+        tokens_data = do_morph(sentence)
 
         cursor.execute('''
             INSERT INTO sentences (
