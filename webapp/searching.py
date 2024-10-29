@@ -85,7 +85,8 @@ def build_query(lowered_tokens):
     for i in range(len(lowered_tokens) - 1):
         conditions.append(f't{i}.id + 1 = t{i+1}.id')
 
-    query = base_query + ' ' + ' '.join(joins) + ' WHERE ' + ' AND '.join(conditions)
+    query = base_query + ' ' + ' '.join(joins) \
+            + ' WHERE ' + ' AND '.join(conditions)
     
     return query, params
 
