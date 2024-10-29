@@ -27,6 +27,7 @@ def repo_redirect():
 @app.route('/search', methods=['GET'])
 def search_results():
     query = request.args.get('q')
+
     if not query:
         return render_template(
             'results.html', results=[], query=query,
