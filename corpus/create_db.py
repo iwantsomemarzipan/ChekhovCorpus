@@ -12,7 +12,7 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE sentences (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        original_sentence TEXT,
+        sentence TEXT,
         work_title TEXT,
         source TEXT
     )
@@ -83,7 +83,7 @@ def insert_data_into_db(txt_file, title, url):
 
         cursor.execute('''
             INSERT INTO sentences (
-                original_sentence, work_title, source
+                sentence, work_title, source
             )
             VALUES (?, ?, ?)
         ''', (sentence, title, url))

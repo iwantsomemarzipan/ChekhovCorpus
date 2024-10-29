@@ -34,7 +34,7 @@ def build_query(lowered_tokens):
     Возвращает строку запроса и параметры для выполнения.
     """
     base_query = '''
-        SELECT DISTINCT s.original_sentence, s.work_title, s.source
+        SELECT DISTINCT s.sentence, s.work_title, s.source
         FROM sentences s
     '''
     joins = []
