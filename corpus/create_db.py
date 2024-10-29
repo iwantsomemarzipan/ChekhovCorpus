@@ -52,47 +52,51 @@ def split_into_sentences(text):
 
 def clean_text(text):
     """
-    Удаляет знаки препинания, кроме дефисов;
+    Удаляет знаки пунктуацию, кроме дефисов;
     оставляет буквы (русские и латинские) и цифры
     """
+    # Сначала заменим все нетекстовые символы, кроме букв, цифр и дефисов
     cleaned_text = re.sub(r'[^a-zA-Zа-яА-ЯёЁ0-9\s-]', '', text)
     
     return cleaned_text
 
-def save_morph(sentence, sentence_id):
+def save_morph(sentence):
     """
-    Проводит морфологический анализ и вставляет результаты в таблицу БД
+    Проводит морфологический анализ
     """
     doc = nlp(sentence)
+    tokens_data = []
     
     for sent in doc.sentences:
         for token in sent.words:
             if token.upos == 'PUNCT':
                 continue
-
-            # Приводим леммы к нижнему регистру    
+            
+            token_text = (token.text.lower() if token.text[0].isupper()
+                          else token.text)
             lemma = (token.lemma.lower() if token.lemma[0].isupper()
                      else token.lemma)
 
-            cursor.execute('''
-                INSERT INTO tokens (sentence_id, token, lemma, pos)
-                VALUES (?, ?, ?, ?)
-            ''', (sentence_id, token.text, lemma, token.upos))
+            tokens_data.append((token_text, lemma, token.upos))
 
-    conn.commit()
+    return tokens_data
 
-def save_sentences_and_morph(txt_file, title, url):
+def insert_data_into_db(txt_file, title, url):
     """
-    Вставяет предложения в таблицу БД
+    Вставляет данные в таблицы БД
     """    
     with open(txt_file, 'r', encoding='utf-8') as file:
         text = file.read()
 
     sentences = split_into_sentences(text)
     
-    cleaned_sentences = [clean_text(sentence) for sentence in sentences]
+    for sentence in sentences:
+        # Проводим морфологический анализ
+        tokens_data = save_morph(sentence)
 
-    for sentence, clean_sent in zip(sentences, cleaned_sentences):
+        # Очищаем предложение и приводим их к нижнему регистру для записи
+        clean_sent = clean_text(sentence).lower()
+
         cursor.execute('''
             INSERT INTO sentences (
                 original_sentence, clean_sentence, work_title, source
@@ -100,11 +104,18 @@ def save_sentences_and_morph(txt_file, title, url):
             VALUES (?, ?, ?, ?)
         ''', (sentence, clean_sent, title, url))
 
+        # Получаем ID вставленных предложений
         sentence_id = cursor.lastrowid
-        save_morph(clean_sent, sentence_id)
+
+        # Вставляем токены с заполнением sentence_id
+        for token_text, lemma, pos in tokens_data:
+            cursor.execute('''
+                INSERT INTO tokens (sentence_id, token, lemma, pos)
+                VALUES (?, ?, ?, ?)
+            ''', (sentence_id, token_text, lemma, pos))
 
     conn.commit()
 
 for title, url in titles.items():
     file_dir = f'./texts/{title}.txt'
-    save_sentences_and_morph(file_dir, title, url)
+    insert_data_into_db(file_dir, title, url)
