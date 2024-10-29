@@ -1,6 +1,6 @@
-import sqlite3
-import pymorphy3
 import os
+import pymorphy3
+import sqlite3
 
 morph = pymorphy3.MorphAnalyzer()
 
@@ -70,6 +70,14 @@ def build_query(lowered_tokens):
         else:
             # Иначе поиск по лемме
             lemma = morph.parse(token)[0].normal_form
+
+            # При лемматизации Stanza заменяет 'ё' на 'е' в лемме,
+            # поэтому чтобы избежать несоответствий между леммами
+            # Stanza и pymorphy вручную делаем замену
+            # после получения леммы введёного токена
+            if 'ё' in lemma:
+                lemma = lemma.replace('ё', 'е')
+
             conditions.append(f'{alias}.lemma = ?')
             params.append(lemma)
     
