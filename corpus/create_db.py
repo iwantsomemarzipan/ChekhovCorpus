@@ -5,7 +5,7 @@ from metadata import titles
 
 nlp = stanza.Pipeline('ru', processors='tokenize,lemma,pos')
 
-conn = sqlite3.connect('new_corpus.db')
+conn = sqlite3.connect('corpus.db')
 cursor = conn.cursor()
 
 # Создание таблицы для предложений
@@ -101,5 +101,5 @@ def insert_data_into_db(txt_file, title, url):
     conn.commit()
 
 for title, url in titles.items():
-    file_dir = f'./text/{title}.txt'
+    file_dir = f'./texts/{title}.txt'
     insert_data_into_db(file_dir, title, url)
